@@ -4,15 +4,13 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class QueueController : MonoBehaviour {
-
+	
 	private float speed = 5f;
 	private Vector3 initial_position;
 	private float ratio;
 	public Vector3 charge;
 	
 	public Rigidbody rb;
-	
-	public float xAngle, yAngle, zAngle;
 
 	// Use this for initialization
 	void Start () {
