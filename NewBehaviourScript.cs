@@ -28,7 +28,8 @@ void Start()
 
     {
 
-        pivot = new GameObject().transform;
+        //pivot = new GameObject().transform;
+        pivot = GameObject.FindWithTag("pivot").transform;
 
         stick1.transform.parent = pivot;
 
