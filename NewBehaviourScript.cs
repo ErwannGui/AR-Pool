@@ -35,7 +35,7 @@ void Start()
 
     }
 
-void Update()
+    void Update()
 
     {
 
@@ -43,7 +43,25 @@ void Update()
 
         vt = (ball.transform.position - stick1.transform.position);
 
-if (Input.GetKeyUp(KeyCode.Space))   
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+            if (touch.phase == TouchPhase.Began)
+            {
+                stick1.SetActive(true);
+            }
+            if (touch.phase == TouchPhase.Ended)
+            {
+                stick1.SetActive(false);
+
+                rball.velocity = vt * 2;
+            }
+        }
+    
+
+
+
+        /*if (Input.GetKeyUp(K))   
 
         {
 
@@ -51,15 +69,15 @@ if (Input.GetKeyUp(KeyCode.Space))
 
             rball.velocity = vt*2;
 
-        }
+        }*/
 
-if(Input.GetKey(KeyCode.Space))
+/*if(Input.GetKey(KeyCode.Space))
 
         {
 
             stick1.SetActive(true);
 
-        }
+        }*/
 
     }
 
