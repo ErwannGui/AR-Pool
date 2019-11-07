@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody))]
 public class QueueController : MonoBehaviour {
@@ -20,12 +21,12 @@ public class QueueController : MonoBehaviour {
         //this.gameObject.name = "Self";
 		Debug.Log("Initial :"+initial_position);
 		
-		rb = GetComponent<Rigidbody> ();
+		rb = GetComponent<Rigidbody>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		//Debug.Log(CheckRange(this.gameObject.transform.position));
+		/*//Debug.Log(CheckRange(this.gameObject.transform.position));
 		if(Input.GetKey(KeyCode.Space)) {
 			float y_load = ToSingle(0.1);
 			float z_load = ToSingle(0.1 * ratio);
@@ -49,9 +50,43 @@ public class QueueController : MonoBehaviour {
 			rb.AddForce(new Vector3(0, -1, 10), ForceMode.Impulse);
 			// ResetPosition();
 			// Shoot(15f);
-		}
-		
-	}
+		}*/
+
+        if (Input.touchCount == 1)
+        {
+            Touch touch = Input.GetTouch(0);
+            if (touch.phase == TouchPhase.Began)
+            {
+                float y_load = ToSingle(0.1);
+                float z_load = ToSingle(0.1 * ratio);
+                Vector3 direction = new Vector3(0, y_load, z_load);
+                direction = direction * speed * Time.deltaTime;
+                this.gameObject.transform.position += direction;
+                //rb.AddForce(new Vector3(0, 1, 0), ForceMode.Impulse);
+
+                charge = this.gameObject.transform.position;
+            }
+            if (touch.phase == TouchPhase.Ended)
+            {
+                float y_shoot = ToSingle(initial_position.y - charge.y);
+			float z_shoot = ToSingle((initial_position.z + charge.y));
+			// Vector3 force = new Vector3(0, y_shoot, z_shoot);
+			Vector3 force = new Vector3(0, y_shoot, z_shoot);
+			Debug.Log("Charge :"+charge);
+			Debug.Log("Force :"+force);
+			Debug.Log("Forward :"+this.gameObject.transform.forward);
+			rb.AddForce(new Vector3(0, -1, 10), ForceMode.Impulse);
+			// ResetPosition();
+			// Shoot(15f);
+            }
+        }
+
+        if (Input.touchCount == 2)
+        {
+            SceneManager.LoadScene("Level");
+        }
+
+    }
 	
 	public static float ToSingle(double value) {
 		return (float)value;

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class NewBehaviourScript : MonoBehaviour {
 
@@ -13,6 +14,8 @@ public Rigidbody rball;     //Rigidbody of ball
 public GameObject stick1;   //object stick
 
 public GameObject ball;     //object ball
+
+//public GameObject camera;
 
  
 
@@ -43,7 +46,7 @@ void Start()
 
         vt = (ball.transform.position - stick1.transform.position);
 
-        if (Input.touchCount > 0)
+        if (Input.touchCount == 1)
         {
             Touch touch = Input.GetTouch(0);
             if (touch.phase == TouchPhase.Began)
@@ -57,9 +60,12 @@ void Start()
                 rball.velocity = vt * 2;
             }
         }
-    
 
 
+        if (Input.touchCount == 2)
+        {
+            SceneManager.LoadScene("Level");
+        }
 
         /*if (Input.GetKeyUp(K))   
 
@@ -71,13 +77,13 @@ void Start()
 
         }*/
 
-/*if(Input.GetKey(KeyCode.Space))
+            /*if(Input.GetKey(KeyCode.Space))
 
-        {
+                    {
 
-            stick1.SetActive(true);
+                        stick1.SetActive(true);
 
-        }*/
+                    }*/
 
     }
 
@@ -87,9 +93,11 @@ void Roll()
 
     {
 
+        //Vector3 v3Pos = Camera.main.WorldToScreenPoint(target.position);
+
         Vector3 v3Pos = Camera.main.WorldToScreenPoint(target.position);
-		
-		Debug.Log(v3Pos);
+
+        Debug.Log(v3Pos);
 
         v3Pos = Input.mousePosition - v3Pos;
 		
